@@ -18,17 +18,13 @@ router.post("/createAuthor", authorController.createAuthor)
 
 router.post("/createBlog", authMiddleware.authenticate,   blogController.createBlog)
 
-//router.get("/allBlogs", blogController.allBlogs)
-
-
-
 router.get("/blogs", authMiddleware.authenticate,   blogController.BloglistbyFilter)
 
 router.put("/blogs/:blogId", authMiddleware.authenticate, authMiddleware.authorise, checkIsDeleted.checkIsDeleted, blogController.updateBlog)
 
-router.delete("/delete/blogs/:blogId", authMiddleware.authenticate, authMiddleware.authorise , checkIsDeleted.checkIsDeleted, blogController.deleteBlog)
+router.delete("/blogs/:blogId", authMiddleware.authenticate, authMiddleware.authorise , checkIsDeleted.checkIsDeleted, blogController.deleteBlog)
 
-router.delete("/delete/blogs" , authMiddleware.authenticate,  blogController.deletecertainBlog)
+router.delete("/blogs" , authMiddleware.authenticate,  blogController.deletecertainBlog)
 
 router.post("/login", blogController.userLogin)
 

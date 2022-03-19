@@ -7,7 +7,7 @@ const createAuthor = async function (req, res) {
         if (Object.keys(data).length != 0) {
             const authorData = await authorModel.create(data)
 
-            res.status(201).send({ status: true, msg: data })
+            res.status(201).send({ status: true, msg: authorData })
 
         }else{
             res.status(400).send({status:false, msg:"body is missing"})
@@ -15,7 +15,7 @@ const createAuthor = async function (req, res) {
 
 
     } catch (err) {
-        res.status(400).send({ status: false, error: err.message })
+        res.status(500).send({ status: false, error: err.message })
     }
 
 }

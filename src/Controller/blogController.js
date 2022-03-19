@@ -26,7 +26,7 @@ const createBlog = async function (req, res) {
         }
 
     } catch (err) {
-        res.status(400).send({ status: false, msg: err.message })
+        res.status(500).send({ status: false, msg: err.message })
     }
 }
 
@@ -57,7 +57,6 @@ const createBlog = async function (req, res) {
 const BloglistbyFilter = async function (req, res) {
     try {
 
-        //console.log(req.query)
 
         let { category, authorId, tags, subCategory } = req.query
         let obj = {}
@@ -65,8 +64,8 @@ const BloglistbyFilter = async function (req, res) {
         if (authorId != null) obj.authorId = authorId
         if (tags != null) obj.tags = tags
         if (subCategory != null) obj.subCategory = subCategory
-        // obj.isDeleted = false
-        // obj.isPublished = true
+        //if(title!=null) obj.title = title
+ 
 
         let blogData = await blogModel.find(obj)
         // console.log(blogData)
@@ -79,43 +78,25 @@ const BloglistbyFilter = async function (req, res) {
 
 
     } catch (err) {
-        res.status(400).send({ status: true, msg: err.message })
+        res.status(500).send({ status: true, msg: err.message })
     }
 }
 
-
+// update blog-----------------------------------------------------------
 
 
 const updateBlog = async function (req, res) {
     try {
         let data = req.body
         if (Object.keys(data).length != 0) {
-            // data.isPublished = true
-            // data.publishedAt = new Date()
 
-
-            // let id = req.params.blogId
-            // let check = await blogModel.findById(id)
-            //console.log(check)
-
-            // if (check.isDeleted == false) {
             let results = await blogModel.findOneAndUpdate(
                 { _id: req.blogId },
                 { $set: { title: data.title, body: data.body, category: data.category, isPublished: true }, $addToSet: { tags: data.tags, subCategory: data.subCategory }, $currentDate: { publishedAt: true } },
-                //data,
-                // { returnOriginal: false } or {new:true}
+
                 {new :true}
             )
             return res.status(200).send({ status: true, msg: results })
-
-
-
-            // } else {
-            //     res.status(404).send({ status: false, msg: "The post is already removed from the server" })
-            // }
-
-
-
 
         } else {
             res.status(404).send({ status: false, msg: "please provide content in the body" })
@@ -124,7 +105,7 @@ const updateBlog = async function (req, res) {
 
     } catch (err) {
 
-        res.status(400).send({ status: false, msg: err.message })
+        res.status(500).send({ status: false, msg: err.message })
     }
 
 }
@@ -145,7 +126,7 @@ const deleteBlog = async function (req, res) {
             { _id: req.blogId },
             { $set: { isDeleted: true } }
         )
-        return res.status(200).send()
+        return res.status(200).send({status:true,msg:"The post is deleted successfully from the server"})
         //.send({status : true})
 
         // } else {
@@ -160,7 +141,7 @@ const deleteBlog = async function (req, res) {
 
     } catch (err) {
 
-        res.status(400).send({ status: false, msg: err.message })
+        res.status(500).send({ status: false, msg: err.message })
     }
 }
 
@@ -185,13 +166,6 @@ const deletecertainBlog = async function (req, res) {
             }
         }
 
-        //console.log(obj)
-        // here i have douts(wheteher all filters will be applied after check whther a given blog is published or not )
-        //if(isPublished != null) obj.isPublished=isPublished
-
-        // if (isPublished == true) {
-        //     res.status(404).send({ status: false, msg: "Cannot delete--- already published" })
-        // } 
 
         if (Object.keys(obj).length != 0) {
             let result = await blogModel.updateOne(
@@ -249,11 +223,6 @@ const userLogin = async function (req, res) {
 
 
 };
-
-
-
-
-
 
 module.exports.createBlog = createBlog
 //module.exports.allBlogs = allBlogs

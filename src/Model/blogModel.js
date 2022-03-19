@@ -6,11 +6,11 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const createBlog = new mongoose.Schema({
     title : {
         type : String,
-        require : true
+        required : true
     },
     body : {
         type: String,
-        require : true
+        required : true
 
     },
     authorId:{
@@ -23,7 +23,7 @@ const createBlog = new mongoose.Schema({
     },
     category : {
         type : String,
-        require : true,
+        required : true,
 
     },
     
@@ -37,7 +37,7 @@ const createBlog = new mongoose.Schema({
 
     deletedAt : {
         type: Date,
-        default : ""
+        //default : ""
 
 
    },
@@ -47,7 +47,7 @@ const createBlog = new mongoose.Schema({
    },
    publishedAt : {
        type : Date,
-       default: ""
+       //default: ""
    }
 
 }, {timestamps : true})

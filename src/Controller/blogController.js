@@ -3,6 +3,9 @@ const authorModel = require("../Model/authorModel")
 const { response } = require("express")
 const jwt = require("jsonwebtoken")
 
+// Blog Create 
+
+
 const createBlog = async function (req, res) {
     try {
 
@@ -32,26 +35,9 @@ const createBlog = async function (req, res) {
 
 
 
-// const allBlogs = async function (req, res) {
-//     try {
-//         let blogData = await blogModel.find({ isDeleted: false, isPublished: true })
+//>>>>>>>>>>>>>>>>>>>>>>----------------------------------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-//         if (blogData.length > 0) {
-//             res.status(200).send({ status: true, msg: blogData })
-
-//         } else {
-//             res.status(404).send({ status: false, msg: "No data found" })
-//         }
-
-
-//     } catch (err) {
-//         res.status(400).send({ status: true, msg: err.message })
-//     }
-
-
-// }
-
-
+//Blog list by fileter
 
 
 const BloglistbyFilter = async function (req, res) {
@@ -111,7 +97,7 @@ const updateBlog = async function (req, res) {
 }
 
 
-
+//>>>>>>Delete Blog---------------<<<<<<<<<<<<<<<<<<<<<<
 
 
 const deleteBlog = async function (req, res) {

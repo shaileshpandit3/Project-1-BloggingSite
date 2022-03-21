@@ -1,38 +1,41 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
-const authorModel = new mongoose.Schema({
-    fname: {
-        type: String,
-        required: true
-    },
-    lname: {
-        type: String,
-        required: true
-    },
+const authorSchema = new mongoose.Schema({
+
     title: {
         type: String,
         required: true,
         enum: ["Mr", "Mrs", "Miss"]
     },
-
-
-    emailId: {
+    fname: {
         type: String,
         trim: true,
-        lowercase:true,
+        required: true
+    },
+    lname: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    
+    email: {
+       unique:true,
+        type: String,
+        lowercase: true,
+        trim:true,
         required: true,
-        unique: true,
-        match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,"Please provide your email address."]
+        //match: [/^\w+([\.-]?\w+)@\w+([\. -]?\w+)(\.\w{2,3})+$/, 'Please fill a valid email address']
+        validate:{
+            validator:function(email){return /^\w+([\.-]?\w+)@\w+([\. -]?\w+)(\.\w{2,3})+$/.test(email)},
+            message: 'Please inter a valid email address.',
+            isAsync: false
+        }
     },
     password: {
         type: String,
-        required: true,
-        match:[/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9a-zA-Z]).{8,}$/,"Password should be combination of one uppercase , one lower case, one special char, one digit and min 8 , max 20 char long"],
-        
-    },
-    
+        trim: true,
+        required: true
+    }
+}, { timestamps: true });
 
-
-}, {timestamps:true})
-
-module.exports = mongoose.model("Author", authorModel)
+module.exports = mongoose.model('author', authorSchema,'author')

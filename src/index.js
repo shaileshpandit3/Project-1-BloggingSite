@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/Shailesh-DB?retryWrites=true&w=majority", {useNewUrlParser : true})
-.then( () => console.log('mongoDB is connected'))
+.then( () => console.log('mongoDB is connected 27017'))
 .catch( err => console.log(err))
 
 
